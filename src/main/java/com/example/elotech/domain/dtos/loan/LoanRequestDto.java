@@ -13,11 +13,10 @@ public record LoanRequestDto(
         Long id,
         @NotNull(message = "O usuário é obrigatório")
         Long userId,
-
         @NotNull(message = "O livro é obrigatória")
         Long bookId,
-
         @NotBlank(message = "A date de retorno é obrigatória")
+
         @Future(message = "A data de retorno deve ser no futuro")
         LocalDate returnDate,
         String status
