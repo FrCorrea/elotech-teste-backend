@@ -36,5 +36,6 @@ public class RecommendationController {
                                                     @NotNull(message = "O id é obrigatório")
                                                     @Parameter(description = "ID do usuário para obter recomendações de livros") Long userId) {
         return this.recommendationService.getRecommendations(userId);
+
     }
 }

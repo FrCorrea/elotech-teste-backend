@@ -42,7 +42,7 @@ public class LoanController {
             @ApiResponse(responseCode = "400", description = "Erro de validação", content = @Content)
     })
     @PutMapping("/return")
-    public LoanResponseDto returnLoan(@RequestBody @Valid LoanRequestDto loansDto) {
+    public LoanResponseDto returnLoan(@RequestBody LoanRequestDto loansDto) {
         return this.loanService.returnLoan(loansDto);
     }
 

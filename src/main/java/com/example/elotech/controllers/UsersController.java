@@ -37,6 +37,18 @@ public class UsersController {
         return ResponseEntity.ok(this.userService.save(user));
     }
 
+
+    @Operation(summary = "Atualizar usuário", description = "Atualiza um usuário no sistema.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UsersResponseDto.class))}),
+            @ApiResponse(responseCode = "400", description = "Erro de validação", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado", content = @Content)
+    })
+    @PutMapping("/update")
+    public ResponseEntity<UsersResponseDto> updateUser(@RequestBody @Valid UsersRequestDto user) {
+        return ResponseEntity.ok(this.userService.update(user));
+    }
+
     @Operation(summary = "Listar todos os usuários", description = "Lista todos os usuários registrados no sistema.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de usuários retornada com sucesso", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UsersResponseDto.class))})

@@ -51,7 +51,6 @@ public class UserServiceImpl implements UserService {
     public UsersResponseDto update(UsersRequestDto usersDto) {
         try {
             Users users = usersMapper.toEntity(usersDto);
-            checkEmailHasBeenUsed(users.getEmail());
             users = userRepository.save(users);
             return usersMapper.toResponseDto(users);
         }catch (DataAccessException e){
