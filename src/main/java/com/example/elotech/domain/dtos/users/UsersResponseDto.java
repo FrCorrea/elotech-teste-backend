@@ -17,6 +17,6 @@ public class UsersResponseDto {
     private Long id;
     private String name;
     private String email;
-    private LocalDateTime registerDate;
+    private LocalDate registerDate;
     private String phoneNumber;
 }

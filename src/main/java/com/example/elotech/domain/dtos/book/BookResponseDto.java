@@ -16,4 +16,7 @@ public class BookResponseDto {
     private String isbn;
     private LocalDate publishDate;
     private String category;
+
+    public BookResponseDto(long l, String title, String author, String category, String isbn) {
+    }
 }

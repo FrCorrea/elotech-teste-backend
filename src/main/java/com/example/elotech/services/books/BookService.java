@@ -12,4 +12,6 @@ public interface BookService {
     List<BookResponseDto> getAll();
     BookResponseDto getByIsbn(String isbn);
     BookResponseDto getByTitle(String title);
+
+    BookResponseDto getById(Long id);
 }

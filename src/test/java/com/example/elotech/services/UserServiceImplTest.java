@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +42,7 @@ public class UserServiceImplTest {
 
     @Test
     void save_ShouldSaveUserSuccessfully() {
-        UsersRequestDto requestDto = new UsersRequestDto(null, "Romero", "romero.cor@example.com", LocalDateTime.now(), "123456789");
+        UsersRequestDto requestDto = new UsersRequestDto(null, "Romero", "romero.cor@example.com", LocalDate.now(), "123456789");
         Users user = new Users();
         UsersResponseDto responseDto = new UsersResponseDto();
 
@@ -58,7 +58,8 @@ public class UserServiceImplTest {
 
     @Test
     void save_ShouldThrowDatabaseOperationException_WhenDataAccessExceptionOccurs() {
-        UsersRequestDto requestDto = new UsersRequestDto(null, "Yuri Alberto", "yuri.cor@example.com", LocalDateTime.now(), "123456789");
+        UsersRequestDto requestDto = new UsersRequestDto(null, "Yuri Alberto", "yuri.cor@example.com",
+                LocalDate.now(), "123456789");
 
         when(usersMapper.toEntity(requestDto)).thenThrow(new DataIntegrityViolationException("Erro simulado"));
 
@@ -67,7 +68,8 @@ public class UserServiceImplTest {
 
     @Test
     void save_ShouldThrowDataAlreadyInUseException_WhenEmailIsAlreadyUsed() {
-        UsersRequestDto requestDto = new UsersRequestDto(null, "Romero", "romero.cor@example.com", LocalDateTime.now(), "123456789");
+        UsersRequestDto requestDto = new UsersRequestDto(null, "Romero", "romero.cor@example.com",
+                LocalDate.now(), "123456789");
         Users existingUser = new Users();
 
         when(userRepository.findByEmail(requestDto.email())).thenReturn(Optional.of(existingUser));
@@ -77,7 +79,8 @@ public class UserServiceImplTest {
 
     @Test
     void update_ShouldUpdateUserSuccessfully() {
-        UsersRequestDto requestDto = new UsersRequestDto(1L, "Romero", "romero.cor@example.com", LocalDateTime.now(), "123456789");
+        UsersRequestDto requestDto = new UsersRequestDto(1L, "Romero", "romero.cor@example.com",
+                LocalDate.now(), "123456789");
         Users user = new Users();
         UsersResponseDto responseDto = new UsersResponseDto();
 
@@ -93,7 +96,8 @@ public class UserServiceImplTest {
 
     @Test
     void update_ShouldThrowDatabaseOperationException_WhenDataAccessExceptionOccurs() {
-        UsersRequestDto requestDto = new UsersRequestDto(1L, "Romero", "romero.cor@example.com", LocalDateTime.now(), "123456789");
+        UsersRequestDto requestDto = new UsersRequestDto(1L, "Romero", "romero.cor@example.com",
+                LocalDate.now(), "123456789");
 
         when(usersMapper.toEntity(requestDto)).thenThrow(new DataIntegrityViolationException("Erro simulado"));
 

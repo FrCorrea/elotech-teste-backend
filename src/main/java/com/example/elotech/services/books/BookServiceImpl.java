@@ -90,4 +90,15 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @Override
+    public BookResponseDto getById(Long id) {
+        try {
+            Optional<Book> optionalBook = this.bookRepository.findById(id);
+            Book book = optionalBook.orElseThrow(() -> new ResourceNotFoundException("Livro não encontrado"));
+            return bookMapper.toResponseDto(book);
+        } catch (DataAccessException e) {
+            throw new DatabaseOperationException("Erro ao buscar o livro pelo id");
+        }
+    }
+
 }

@@ -26,7 +26,7 @@ public class BookController {
     }
 
     @GetMapping("/getForGoogle")
-    public ResponseEntity<Object> getBooksForGoogle(@RequestParam @NotBlank(message = "O nome é obrigatório")
+    public ResponseEntity<Object> getBooksForGoogle(@RequestParam @NotBlank(message = "O título é obrigatório")
                                                      String title) {
         return ResponseEntity.ok(this.googleBooksService.searchBooks(title));
     }
@@ -52,16 +52,16 @@ public class BookController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/get/{isbn}")
+    @GetMapping("/getIsbn/{isbn}")
     public ResponseEntity<BookResponseDto> getBookByIsbn(@PathVariable @Valid @NotBlank(message = "O isbn é obrigatório")
                                                              String isbn) {
         return ResponseEntity.ok(this.bookService.getByIsbn(isbn));
     }
 
-    @GetMapping("/get/{title}")
+    @GetMapping("/getTitle/{title}")
     public ResponseEntity<BookResponseDto> getBookByTitle(@PathVariable @NotBlank(message = "O nome é obrigatório")
-                                                              String name) {
-        return ResponseEntity.ok(this.bookService.getByTitle(name));
+                                                              String title) {
+        return ResponseEntity.ok(this.bookService.getByTitle(title));
     }
 
 }

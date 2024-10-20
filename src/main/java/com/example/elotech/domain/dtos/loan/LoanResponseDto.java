@@ -22,4 +22,5 @@ public class LoanResponseDto {
     private Book book;
     private String status;
     private LocalDate loanDate;
+    private LocalDate returnDate;
 }

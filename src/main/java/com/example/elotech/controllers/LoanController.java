@@ -30,6 +30,12 @@ public class LoanController {
         return this.loanService.returnLoan(loansDto);
     }
 
+    @GetMapping
+    public List<LoanResponseDto> getAll() {
+        return this.loanService.getAll();
+    }
+
+
     @GetMapping("/getById/{id}")
     public LoanResponseDto getById(@PathVariable @Valid @NotNull(message = "O id é obrigatório")
                                        Long id) {
@@ -46,10 +52,5 @@ public class LoanController {
     public List<LoanResponseDto> getByBookId(@PathVariable @Valid @NotNull(message = "O id é obrigatório")
                                                  Long bookId) {
         return this.loanService.getByBookId(bookId);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable @Valid @NotNull(message = "O id é obrigatório") Long id) {
-        this.loanService.delete(id);
     }
 }

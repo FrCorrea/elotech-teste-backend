@@ -12,6 +12,7 @@ import com.example.elotech.repositories.UserRepository;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,9 +31,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UsersResponseDto save(UsersRequestDto usersDto) {
+        checkEmailHasBeenUsed(usersDto.email());
         try {
-            checkEmailHasBeenUsed(usersDto.email());
             Users users = usersMapper.toEntity(usersDto);
+            users.setRegisterDate(LocalDate.now());
             users = userRepository.save(users);
             return usersMapper.toResponseDto(users);
         }catch (DataAccessException e){
@@ -111,4 +113,5 @@ public class UserServiceImpl implements UserService {
             throw new DatabaseOperationException("Erro ao buscar os usuários");
         }
     }
+
 }

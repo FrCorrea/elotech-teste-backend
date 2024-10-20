@@ -2,13 +2,12 @@ package com.example.elotech.domain;
 
 
 import jakarta.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -23,6 +22,6 @@ public class Users{
     private Long id;
     private String name;
     private String email;
-    private LocalDateTime registerDate;
+    private LocalDate registerDate;
     private String phoneNumber;
 }

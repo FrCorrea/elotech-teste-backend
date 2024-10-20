@@ -42,7 +42,8 @@ public class BookServiceImplTest {
 
     @Test
     void save_ShouldSaveBookSuccessfully() {
-        BookRequestDto requestDto = new BookRequestDto(null, "Title", "Author", "ISBN", LocalDate.now(), "Category");
+        BookRequestDto requestDto = new BookRequestDto(null, "Title", "Author", "ISBN",
+                LocalDate.now(), "Category");
         Book book = new Book();
         BookResponseDto responseDto = new BookResponseDto();
 
@@ -58,9 +59,9 @@ public class BookServiceImplTest {
 
     @Test
     void save_ShouldThrowDatabaseOperationException_WhenDataAccessExceptionOccurs() {
-        BookRequestDto requestDto = new BookRequestDto(null, "Title", "Author", "ISBN", LocalDate.now(), "Category");
+        BookRequestDto requestDto = new BookRequestDto(null, "Title", "Author", "ISBN",
+                LocalDate.now(), "Category");
 
-        // Usando uma exceção concreta que herda de DataAccessException
         when(bookMapper.toEntity(requestDto)).thenThrow(new DataIntegrityViolationException("Erro simulado"));
 
         assertThrows(DatabaseOperationException.class, () -> bookService.save(requestDto));
@@ -83,8 +84,16 @@ public class BookServiceImplTest {
     }
 
     @Test
+    void getAll_ShouldThrowDatabaseOperationException_WhenDataAccessExceptionOccurs() {
+        when(bookRepository.findAll()).thenThrow(DatabaseOperationException.class);
+
+        assertThrows(DatabaseOperationException.class, () -> bookService.getAll());
+    }
+
+    @Test
     void update_ShouldUpdateBookSuccessfully() {
-        BookRequestDto requestDto = new BookRequestDto(null, "Title", "Author", "ISBN", LocalDate.now(), "Category");
+        BookRequestDto requestDto = new BookRequestDto(1L, "Title", "Author", "ISBN",
+                LocalDate.now(), "Category");
         Book book = new Book();
         BookResponseDto responseDto = new BookResponseDto();
 
@@ -100,7 +109,8 @@ public class BookServiceImplTest {
 
     @Test
     void update_ShouldThrowDatabaseOperationException_WhenDataAccessExceptionOccurs() {
-        BookRequestDto requestDto = new BookRequestDto(null, "Title", "Author", "ISBN", LocalDate.now(), "Category");
+        BookRequestDto requestDto = new BookRequestDto(1L, "Title", "Author", "ISBN",
+                LocalDate.now(), "Category");
 
         when(bookMapper.toEntity(requestDto)).thenThrow(new DataIntegrityViolationException("Erro simulado"));
 
@@ -169,5 +179,29 @@ public class BookServiceImplTest {
         when(bookRepository.findByTitle(eq(title))).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () -> bookService.getByTitle(title));
+    }
+
+    @Test
+    void getById_ShouldReturnBookSuccessfully() {
+        Long bookId = 1L;
+        Book book = new Book();
+        BookResponseDto responseDto = new BookResponseDto();
+
+        when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
+        when(bookMapper.toResponseDto(book)).thenReturn(responseDto);
+
+        BookResponseDto result = bookService.getById(bookId);
+
+        assertNotNull(result);
+        verify(bookRepository, times(1)).findById(bookId);
+    }
+
+    @Test
+    void getById_ShouldThrowResourceNotFoundException_WhenBookNotFound() {
+        Long bookId = 1L;
+
+        when(bookRepository.findById(bookId)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> bookService.getById(bookId));
     }
 }

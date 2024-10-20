@@ -4,6 +4,7 @@ import com.example.elotech.domain.Users;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record UsersRequestDto(
@@ -14,7 +15,7 @@ public record UsersRequestDto(
         @NotBlank(message = "O email é obrigatório")
         @Email(message = "O email é inválido")
         String email,
-        LocalDateTime registerDate,
+        LocalDate registerDate,
         @NotBlank(message = "O telefone é obrigatório")
         String phoneNumber
 )
