@@ -39,6 +39,7 @@ public class BookController {
     @GetMapping("/getForGoogle")
     public ResponseEntity<Object> getBooksForGoogle(@RequestParam @NotBlank(message = "O título é obrigatório")
                                                     @Parameter(description = "Título do livro a ser buscado") String title) {
+        System.out.println(title);
         return ResponseEntity.ok(this.googleBooksService.searchBooks(title));
     }
 
