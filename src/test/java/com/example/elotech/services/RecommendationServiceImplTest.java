@@ -47,7 +47,7 @@ public class RecommendationServiceImplTest {
         Long userId = 1L;
         List<BookResponseDto> allBooks = List.of(new BookResponseDto());
 
-        when(userService.getById(userId)).thenReturn(null); // Simula que o usuário existe
+        when(userService.getById(userId)).thenReturn(null);
         when(loanService.getByUserId(userId)).thenReturn(List.of());
         when(bookService.getAll()).thenReturn(allBooks);
 
@@ -72,7 +72,7 @@ public class RecommendationServiceImplTest {
         );
         List<BookResponseDto> loanedBooks = List.of(loanedBook);
 
-        when(userService.getById(userId)).thenReturn(null); // Simula que o usuário existe
+        when(userService.getById(userId)).thenReturn(null);
         when(loanService.getByUserId(userId)).thenReturn(loans);
         when(bookMapper.toResponseDtoList(loans.stream().map(LoanResponseDto::getBook).toList())).thenReturn(loanedBooks);
         when(bookService.getAll()).thenReturn(allBooks);
